@@ -14,3 +14,4 @@ for (const id of channelIds) {
     console.error(`Failed to send to channel ${id}:`, error.message);
   }
 }
+const FRUIT_CHECK_INTERVAL = 5 * 60 * 1000;
