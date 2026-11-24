@@ -15,18 +15,3 @@ for (const id of channelIds) {
   }
 }
 const FRUIT_CHECK_INTERVAL = 5 * 60 * 1000;
-require("dotenv").config();
-
-const { Client, GatewayIntentBits } = require("discord.js");
-const http = require("http");
-
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
-});
-
-const channelIds = (process.env.CHANNEL_IDS || "")
-  .split(",")
-  .map(id => id.trim())
-  .filter(Boolean);
-
-const FRUIT_CHECK_INTERVAL = 5 * 60 * 1000;
