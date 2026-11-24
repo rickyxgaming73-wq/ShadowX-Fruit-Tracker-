@@ -1,20 +1,16 @@
-require("dotenv").config();
-const { Client, GatewayIntentBits } = require("discord.js");
+const channelIds = (process.env.CHANNEL_IDS || "")
+  .split(",")
+  .map(id => id.trim())
+  .filter(Boolean);
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
-});
+for (const id of channelIds) {
+  try {
+    const channel = await client.channels.fetch(id);
 
-client.once("ready", async () => {
-  console.log("🔥 ShadowX Fruit Tracker is online!");
-
-  const channel = await client.channels.fetch(
-    process.env.CHANNEL_ID
-  ).catch(() => null);
-
-  if (channel) {
-    channel.send("🔥 ShadowX Fruit Tracker is ONLINE!");
+    if (channel && channel.isTextBased()) {
+      await channel.send("🔥 ShadowX Fruit Tracker is ONLINE!");
+    }
+  } catch (error) {
+    console.error(`Failed to send to channel ${id}:`, error.message);
   }
-});
-
-client.login(process.env.DISCORD_TOKEN);
+}
